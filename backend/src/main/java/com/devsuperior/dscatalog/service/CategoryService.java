@@ -1,6 +1,7 @@
 package com.devsuperior.dscatalog.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,23 @@ public class CategoryService {
 		
 		//converter usando expressão lambda
 		return listCategoryEntity.stream().map(x-> new CategoryDTO(x)).collect(Collectors.toList());
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public CategoryDTO findbyId(Long id){
+		
+		//Category categoryentity = repository.findById(id).get();
+		
+		//CategoryDTO categorydto = new CategoryDTO(categoryentity);
+		
+		//return categorydto;
+		
+		Optional<Category> objOptional = repository.findById(id);
+		
+		Category categoryentity = objOptional.get();
+		
+		return new CategoryDTO(categoryentity);
 		
 	}
 }
